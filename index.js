@@ -1,25 +1,25 @@
-import{a as g,S as h,i as n}from"./assets/vendor-67BWzQEt.js";(function(){const s=document.createElement("link").relList;if(s&&s.supports&&s.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))i(e);new MutationObserver(e=>{for(const t of e)if(t.type==="childList")for(const o of t.addedNodes)o.tagName==="LINK"&&o.rel==="modulepreload"&&i(o)}).observe(document,{childList:!0,subtree:!0});function r(e){const t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?t.credentials="include":e.crossOrigin==="anonymous"?t.credentials="omit":t.credentials="same-origin",t}function i(e){if(e.ep)return;e.ep=!0;const t=r(e);fetch(e.href,t)}})();const y="51427214-d20a9ea979f3329601707c67f",v="https://pixabay.com/api/";function L(a){const s={key:y,q:a,image_type:"photo",orientation:"horizontal",safesearch:!0};return g.get(v,{params:s}).then(r=>r.data)}const u=document.querySelector(".gallery"),p=document.querySelector(".loader"),b=new h(".gallery a",{captionsData:"alt",captionDelay:250});function S(a){const s=a.map(({webformatURL:r,largeImageURL:i,tags:e,likes:t,views:o,comments:f,downloads:m})=>`
+import{a as R,S as M,i as c}from"./assets/vendor-DqB7j7Ix.js";(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))r(e);new MutationObserver(e=>{for(const a of e)if(a.type==="childList")for(const l of a.addedNodes)l.tagName==="LINK"&&l.rel==="modulepreload"&&r(l)}).observe(document,{childList:!0,subtree:!0});function o(e){const a={};return e.integrity&&(a.integrity=e.integrity),e.referrerPolicy&&(a.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?a.credentials="include":e.crossOrigin==="anonymous"?a.credentials="omit":a.credentials="same-origin",a}function r(e){if(e.ep)return;e.ep=!0;const a=o(e);fetch(e.href,a)}})();const $="51427214-d20a9ea979f3329601707c67f",I="https://pixabay.com/api/",O=15;async function y(s,t){const o={key:$,q:s,image_type:"photo",orientation:"horizontal",safesearch:!0,page:t,per_page:O};try{return(await R.get(I,{params:o})).data}catch{throw new Error("Failed to fetch images")}}const v=document.querySelector(".gallery"),L=document.querySelector(".loader-top"),b=document.querySelector(".loader-bottom"),w=document.querySelector(".load-more"),T=new M(".gallery a",{captionsData:"alt",captionDelay:250});function S(s){const t=s.map(({webformatURL:o,largeImageURL:r,tags:e,likes:a,views:l,comments:P,downloads:E})=>`
       <li class="gallery-item">
-        <a href="${i}">
-          <img src="${r}" alt="${e}" />
+        <a href="${r}">
+          <img src="${o}" alt="${e}" />
         </a>
         <div class="info-grid">
           <div class="info-item">
             <span class="label">Likes</span>
-            <span class="value">${t}</span>
+            <span class="value">${a}</span>
           </div>
           <div class="info-item">
             <span class="label">Views</span>
-            <span class="value">${o}</span>
+            <span class="value">${l}</span>
           </div>
           <div class="info-item">
             <span class="label">Comments</span>
-            <span class="value">${f}</span>
+            <span class="value">${P}</span>
           </div>
           <div class="info-item">
             <span class="label">Downloads</span>
-            <span class="value">${m}</span>
+            <span class="value">${E}</span>
           </div>
         </div>
-      </li>`).join("");u.insertAdjacentHTML("beforeend",s),b.refresh()}function w(){u.innerHTML=""}function q(){p.classList.add("visible")}function l(){p.classList.remove("visible")}const d=document.querySelector(".form"),c=d.elements["search-text"];d.addEventListener("submit",a=>{a.preventDefault();const s=c.value.trim();if(!s){n.warning({message:"Please enter a search term!",position:"topRight"});return}w(),q(),L(s).then(r=>{if(l(),r.hits.length===0){n.error({message:"Sorry, there are no images matching your search query. Please try again!",position:"topRight"});return}S(r.hits)}).catch(r=>{l(),n.error({message:"Oops! Something went wrong.",position:"topRight"}),console.error(r)}).finally(()=>{l(),c.value=""})});
+      </li>`).join("");v.insertAdjacentHTML("beforeend",t),T.refresh()}function x(){v.innerHTML=""}function A(){L.classList.add("visible")}function h(){L.classList.remove("visible")}function H(){b.classList.add("visible")}function g(){b.classList.remove("visible")}function q(){w.classList.add("visible")}function m(){w.classList.remove("visible")}const B=document.querySelector(".form"),p=B.elements["search-text"],_=document.querySelector(".load-more");let f="",n=1;const d=15;let u=0;const i=new Set;B.addEventListener("submit",async s=>{s.preventDefault();const t=p.value.trim();if(!t){c.warning({message:"Please enter a search term!",position:"topRight"});return}f=t,n=1,i.clear(),x(),m(),A();try{const o=await y(f,n);if(h(),!o.hits.length){c.error({message:"Sorry, no images match your search query.",position:"topRight"});return}const r=o.hits.filter(e=>!i.has(e.id));r.forEach(e=>i.add(e.id)),S(r),p.value="",p.focus(),u=Math.ceil(o.totalHits/d),i.size<o.totalHits&&q()}catch(o){h(),c.error({message:"Oops! Something went wrong.",position:"topRight"}),console.error(o)}});_.addEventListener("click",async()=>{m(),H();const s=[];try{for(;s.length<d&&n<u;){n+=1;const o=(await y(f,n)).hits.filter(r=>!i.has(r.id));o.forEach(r=>i.add(r.id)),s.push(...o)}if(g(),!s.length){c.info({message:"You're already viewing all available results.",position:"topRight"});return}S(s.slice(0,d)),z(),n>=u||i.size>=u*d?(m(),c.info({message:"We're sorry, but you've reached the end of search results.",position:"topRight"})):q()}catch(t){g(),c.error({message:"Failed to load more images.",position:"topRight"}),console.error(t)}});function z(){const s=document.querySelector(".gallery-item");if(!s)return;const{height:t}=s.getBoundingClientRect();window.scrollBy({top:t*2,behavior:"smooth"})}
 //# sourceMappingURL=index.js.map
